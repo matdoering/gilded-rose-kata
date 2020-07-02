@@ -52,8 +52,6 @@ class GildedRose(object):
                 self.decrement_sell_in_of(item)
                 self.update_quality_non_special_item(item)
 
-            self.update_quality_for_negative_sell_in(item)
-
     def update_quality_brie(self, item):
         if item.quality < MAX_QUAL:
             self.increment_quality_of(item)
@@ -72,19 +70,6 @@ class GildedRose(object):
         if item.sell_in < 0:
             # pass reduces value after the concert
             item.quality = 0
-
-    def update_quality_for_negative_sell_in(self, item):
-        if item.sell_in < 0:
-            if item.name == SpecialItem.AGED_BRIE.value:
-                pass
-            else:
-                if item.name == SpecialItem.BACKSTAGE_PASS.value:
-                    pass
-                elif item.quality > 0:
-                    pass
-                    #if item.name != SpecialItem.SULFURAS.value:
-                    #    self.decrement_quality_of(item)
-
 
 
 class Item:
