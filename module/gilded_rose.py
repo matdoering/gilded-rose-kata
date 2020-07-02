@@ -105,3 +105,25 @@ class Altbier(Item):
 
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
+
+class AgedBrie(Item):
+
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
+
+class BackstageTicket(Item):
+
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
+
+
+class Sulfuras(Item):
+
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
+
+
+class DefaultItem(Item):
+
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
