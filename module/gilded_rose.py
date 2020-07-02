@@ -54,6 +54,8 @@ class GildedRose(object):
     def update_quality_brie(self, item):
         if item.quality < MAX_QUAL:
             self.increment_quality_of(item)
+            if item.sell_in < 0:
+                self.increment_quality_of(item, by=1)
 
     def update_quality_backstage_pass(self, item):
         if item.quality < MAX_QUAL:
@@ -67,8 +69,7 @@ class GildedRose(object):
     def update_quality_for_negative_sell_in(self, item):
         if item.sell_in < 0:
             if item.name == SpecialItem.AGED_BRIE.value:
-                if item.quality < MAX_QUAL:
-                    self.increment_quality_of(item, by=1)
+                pass
             else:
                 if item.name == SpecialItem.BACKSTAGE_PASS.value:
                     item.quality = 0
