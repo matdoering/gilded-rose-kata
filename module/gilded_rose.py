@@ -54,24 +54,20 @@ class GildedRose(object):
                 self.update_quality_non_special_item(item)
 
     def update_quality_brie(self, item):
-        if item.quality < MAX_QUAL:
-            self.increment_quality_of(item)
-            if item.sell_in < 0:
-                self.increment_quality_of(item, by=1)
+        self.increment_quality_of(item)
+        if item.sell_in < 0:
+            self.increment_quality_of(item, by=1)
 
     def update_quality_backstage_pass(self, item):
         if item.sell_in < 0:
             # pass reduces value after the concert
             item.quality = 0
-            return
-
-        if item.quality < MAX_QUAL:
-            if item.sell_in > 10:
-                self.increment_quality_of(item, by=1)
-            elif item.sell_in < 6:
-                self.increment_quality_of(item, by=3)
-            elif item.sell_in < 11:
-                self.increment_quality_of(item, by=2)
+        elif item.sell_in > 10:
+            self.increment_quality_of(item, by=1)
+        elif item.sell_in < 6:
+            self.increment_quality_of(item, by=3)
+        elif item.sell_in < 11:
+            self.increment_quality_of(item, by=2)
 
 
 class Item:
