@@ -19,8 +19,8 @@ class GildedRose(object):
     def decrement_quality(self, item):
         item.quality -= 1
 
-    def increment_quality(self, item):
-        item.quality += 1
+    def increment_quality_of(self, item, by=1):
+        item.quality += by
 
     def decrement_sell_in(self, item):
         item.sell_in -= 1
@@ -42,16 +42,16 @@ class GildedRose(object):
 
     def update_quality_brie(self, item):
         if item.quality < 50:
-            self.increment_quality(item)
+            self.increment_quality_of(item)
 
     def update_quality_backstage_pass(self, item):
         if item.quality < 50:
-            self.increment_quality(item)
-            if item.quality < 50:
-                if item.sell_in < 11:
-                    self.increment_quality(item)
-                if item.sell_in < 6:
-                    self.increment_quality(item)
+            if item.sell_in > 10:
+                self.increment_quality_of(item, by=1)
+            elif item.sell_in < 6:
+                self.increment_quality_of(item, by=3)
+            elif item.sell_in < 11:
+                self.increment_quality_of(item, by=2)
 
     def update_quality_for_negative_sell_in(self, item):
         if item.sell_in < 0:
