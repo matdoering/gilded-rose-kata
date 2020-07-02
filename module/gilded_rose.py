@@ -1,28 +1,29 @@
 # -*- coding: utf-8 -*-
 from enum import Enum
 
+
 class SpecialItem(Enum):
     AGED_BRIE = "Aged Brie"
     BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
     SULFURAS = "Sulfuras, Hand of Ragnaros"
+
 
 class GildedRose(object):
 
     def __init__(self, items):
         self.items = items
 
-
     def update_quality_non_special_item(self, item):
         if item.quality > 0:
-            self.decrement_quality(item)
+            self.decrement_quality_of(item)
 
-    def decrement_quality(self, item):
+    def decrement_quality_of(self, item):
         item.quality -= 1
 
     def increment_quality_of(self, item, by=1):
         item.quality += by
 
-    def decrement_sell_in(self, item):
+    def decrement_sell_in_of(self, item):
         item.sell_in -= 1
 
     def update_quality(self):
@@ -36,7 +37,7 @@ class GildedRose(object):
 
             if item.name != SpecialItem.SULFURAS.value:
                 # decrement sell in for anything except sulfuras
-                self.decrement_sell_in(item)
+                self.decrement_sell_in_of(item)
 
             self.update_quality_for_negative_sell_in(item)
 
@@ -55,16 +56,17 @@ class GildedRose(object):
 
     def update_quality_for_negative_sell_in(self, item):
         if item.sell_in < 0:
-            if item.name != SpecialItem.AGED_BRIE.value :
+            if item.name != SpecialItem.AGED_BRIE.value:
                 if item.name != SpecialItem.BACKSTAGE_PASS.value:
                     if item.quality > 0:
                         if item.name != SpecialItem.SULFURAS.value:
-                            self.decrement_quality(item)
+                            self.decrement_quality_of(item)
                 else:
                     item.quality = item.quality - item.quality
             else:
                 if item.quality < 50:
-                    item.quality = item.quality + 1
+                    self.increment_quality_of(item, by=1)
+
 
 class Item:
     def __init__(self, name, sell_in, quality):
