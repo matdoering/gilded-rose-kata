@@ -31,6 +31,64 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual("Backstage passes to a TAFKAL80ETC concert", items[0].name)
 
+    def test_increase_quality_by_2_if_name_eq_Backstage_and_sell_in_lt_11_and_quality_lt_50(
+            self):
+        # Arrange
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=10, quality=0)]
+        gilded_rose = GildedRose(items)
+
+        # Act
+        gilded_rose.update_quality()
+
+        # Assert
+        self.assertEqual(2, items[0].quality)
+
+    def test_increase_quality_by_3_if_name_eq_Backstage_and_sell_in_lt_6_and_quality_lt_50(
+            self):
+        # Arrange
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=0)]
+        gilded_rose = GildedRose(items)
+
+        # Act
+        gilded_rose.update_quality()
+
+        # Assert
+        self.assertEqual(3, items[0].quality)
+
+    def test_same_quality_if_name_eq_Backstage_and_quality_gt_49(
+            self):
+        # Arrange
+        items = [Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=50)]
+        gilded_rose = GildedRose(items)
+
+        # Act
+        gilded_rose.update_quality()
+
+        # Assert
+        self.assertEqual(50, items[0].quality)
+
+    def test_decrease_quality_by_2_if_unknown_name_and_sell_in_lt_0_and_quality_gt_1(self):
+        # Arrange
+        items = [Item(name="my_name", sell_in=-1, quality=2)]
+        gilded_rose = GildedRose(items)
+
+        # Act
+        gilded_rose.update_quality()
+
+        # Assert
+        self.assertEqual(0, items[0].quality)
+
+    def test_dont_decrease_quality_if_name_sulfuras_and_sell_in_lt_0_and_quality_gt_1(self):
+        # Arrange
+        items = [Item(name="Sulfuras, Hand of Ragnaros", sell_in=-1, quality=2)]
+        gilded_rose = GildedRose(items)
+
+        # Act
+        gilded_rose.update_quality()
+
+        # Assert
+        self.assertEqual(2, items[0].quality)
+
     def test_sulfuras_hand_of_ragnaros(self):
         items = [Item("Sulfuras, Hand of Ragnaros", 0, 0)]
         gilded_rose = GildedRose(items)
