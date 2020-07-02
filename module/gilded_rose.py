@@ -57,16 +57,16 @@ class GildedRose(object):
 
     def update_quality_for_negative_sell_in(self, item):
         if item.sell_in < 0:
-            if item.name != SpecialItem.AGED_BRIE.value:
+            if item.name == SpecialItem.AGED_BRIE.value:
+                if item.quality < MAX_QUAL:
+                    self.increment_quality_of(item, by=1)
+            else:
                 if item.name != SpecialItem.BACKSTAGE_PASS.value:
                     if item.quality > 0:
                         if item.name != SpecialItem.SULFURAS.value:
                             self.decrement_quality_of(item)
                 else:
-                    item.quality = item.quality - item.quality
-            else:
-                if item.quality < MAX_QUAL:
-                    self.increment_quality_of(item, by=1)
+                    item.quality = 0
 
 
 class Item:
