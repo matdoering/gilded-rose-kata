@@ -38,16 +38,16 @@ class GildedRose(object):
     def update_quality(self):
         for item in self.items:
             if item.name == SpecialItem.AGED_BRIE.value:
+                self.decrement_sell_in_of(item)
                 self.update_quality_brie(item)
-                self.decrement_sell_in_of(item)
             elif item.name == SpecialItem.BACKSTAGE_PASS.value:
-                self.update_quality_backstage_pass(item)
                 self.decrement_sell_in_of(item)
+                self.update_quality_backstage_pass(item)
             elif item.name == SpecialItem.SULFURAS.value:
                 self.update_quality_sulfuras(item)
             else:
-                self.update_quality_non_special_item(item)
                 self.decrement_sell_in_of(item)
+                self.update_quality_non_special_item(item)
 
             self.update_quality_for_negative_sell_in(item)
 
@@ -66,13 +66,17 @@ class GildedRose(object):
             elif item.sell_in < 11:
                 self.increment_quality_of(item, by=2)
 
+        if item.sell_in < 0:
+            # pass reduces value after the concert
+            item.quality = 0
+
     def update_quality_for_negative_sell_in(self, item):
         if item.sell_in < 0:
             if item.name == SpecialItem.AGED_BRIE.value:
                 pass
             else:
                 if item.name == SpecialItem.BACKSTAGE_PASS.value:
-                    item.quality = 0
+                    pass
                 elif item.quality > 0:
                     if item.name != SpecialItem.SULFURAS.value:
                         self.decrement_quality_of(item)
