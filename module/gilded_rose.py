@@ -21,6 +21,10 @@ class GildedRose(object):
     def update_quality_non_special_item(self, item):
         if item.quality > 0:
             self.decrement_quality_of(item)
+        # decrement quality after check
+        if item.quality > 0 and item.sell_in < 0:
+            self.decrement_quality_of(item)
+
 
     def decrement_quality_of(self, item):
         item.quality -= 1
@@ -78,8 +82,9 @@ class GildedRose(object):
                 if item.name == SpecialItem.BACKSTAGE_PASS.value:
                     pass
                 elif item.quality > 0:
-                    if item.name != SpecialItem.SULFURAS.value:
-                        self.decrement_quality_of(item)
+                    pass
+                    #if item.name != SpecialItem.SULFURAS.value:
+                    #    self.decrement_quality_of(item)
 
 
 
