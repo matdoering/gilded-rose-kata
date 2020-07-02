@@ -39,15 +39,14 @@ class GildedRose(object):
         for item in self.items:
             if item.name == SpecialItem.AGED_BRIE.value:
                 self.update_quality_brie(item)
+                self.decrement_sell_in_of(item)
             elif item.name == SpecialItem.BACKSTAGE_PASS.value:
                 self.update_quality_backstage_pass(item)
+                self.decrement_sell_in_of(item)
             elif item.name == SpecialItem.SULFURAS.value:
                 self.update_quality_sulfuras(item)
             else:
                 self.update_quality_non_special_item(item)
-
-            if item.name != SpecialItem.SULFURAS.value:
-                # decrement sell in for anything except sulfuras
                 self.decrement_sell_in_of(item)
 
             self.update_quality_for_negative_sell_in(item)
