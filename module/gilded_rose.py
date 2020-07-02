@@ -7,6 +7,7 @@ class SpecialItem(Enum):
     BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
     SULFURAS = "Sulfuras, Hand of Ragnaros"
 
+MAX_QUAL = 50
 
 class GildedRose(object):
 
@@ -42,11 +43,11 @@ class GildedRose(object):
             self.update_quality_for_negative_sell_in(item)
 
     def update_quality_brie(self, item):
-        if item.quality < 50:
+        if item.quality < MAX_QUAL:
             self.increment_quality_of(item)
 
     def update_quality_backstage_pass(self, item):
-        if item.quality < 50:
+        if item.quality < MAX_QUAL:
             if item.sell_in > 10:
                 self.increment_quality_of(item, by=1)
             elif item.sell_in < 6:
@@ -64,7 +65,7 @@ class GildedRose(object):
                 else:
                     item.quality = item.quality - item.quality
             else:
-                if item.quality < 50:
+                if item.quality < MAX_QUAL:
                     self.increment_quality_of(item, by=1)
 
 
