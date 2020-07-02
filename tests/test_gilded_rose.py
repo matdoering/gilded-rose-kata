@@ -194,5 +194,24 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(18, items[0].quality)
 
+    def test_altbier_degrades_twice_as_fast_after_sell_in(self):
+        items = [Item("summoned Altbier", sell_in=-1, quality=4)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(0, items[0].quality)
+
+    def test_summoned_altbier_degrades_thrice_as_fast(self):
+        items = [Item("summoned Altbier", 20, 20)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(20-6, items[0].quality)
+
+    def test_summoned_blub_degrades_thrice_as_fast(self):
+        items = [Item("summoned blub", sell_in=20, quality=15)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(15-(1*3), items[0].quality)
+
+
 if __name__ == '__main__':
     unittest.main()

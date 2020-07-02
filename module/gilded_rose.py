@@ -14,6 +14,8 @@ class SpecialItem(Enum):
 
 MAX_QUAL = 50
 
+def is_summoned_item(item):
+    return item.name.startswith("summoned ")
 
 class GildedRose(object):
 
@@ -27,8 +29,13 @@ class GildedRose(object):
             self.decrement_quality_of(item)
 
     def decrement_quality_of(self, item, by=1):
-        if item.quality > 0:
+        if is_summoned_item(item):
+            # summoned items degrade thrice as fast
+            by *= 3
+        if (item.quality - by) > 0:
             item.quality -= by
+        else:
+            item.quality = 0
 
     def increment_quality_of(self, item, by=1):
         if item.quality <= (MAX_QUAL - by):
@@ -42,19 +49,23 @@ class GildedRose(object):
         pass
 
     def update_quality_altbier(self, item):
-        self.decrement_quality_of(item, 2)
+        base_decrement = 2
+        if item.sell_in < 0:
+            self.decrement_quality_of(item, by=base_decrement*2)
+        else:
+            self.decrement_quality_of(item, base_decrement)
 
     def update_quality(self):
         for item in self.items:
-            if item.name == SpecialItem.AGED_BRIE.value:
+            if item.name.endswith(SpecialItem.AGED_BRIE.value):
                 self.decrement_sell_in_of(item)
                 self.update_quality_brie(item)
-            elif item.name == SpecialItem.BACKSTAGE_PASS.value:
+            elif item.name.endswith(SpecialItem.BACKSTAGE_PASS.value):
                 self.decrement_sell_in_of(item)
                 self.update_quality_backstage_pass(item)
-            elif item.name == SpecialItem.SULFURAS.value:
+            elif item.name.endswith(SpecialItem.SULFURAS.value):
                 self.update_quality_sulfuras(item)
-            elif item.name == SpecialItem.ALTBIER.value:
+            elif item.name.endswith(SpecialItem.ALTBIER.value):
                 self.decrement_sell_in_of(item)
                 self.update_quality_altbier(item)
             else:
