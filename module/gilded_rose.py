@@ -20,14 +20,13 @@ class GildedRose(object):
 
     def update_quality_non_special_item(self, item):
         if item.sell_in < 0:
-            self.decrement_quality_of(item)
-            self.decrement_quality_of(item)
+            self.decrement_quality_of(item, by=2)
         else:
             self.decrement_quality_of(item)
 
-    def decrement_quality_of(self, item):
+    def decrement_quality_of(self, item, by = 1):
         if item.quality > 0:
-            item.quality -= 1
+            item.quality -= by
 
     def increment_quality_of(self, item, by=1):
         item.quality += by
