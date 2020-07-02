@@ -29,7 +29,8 @@ class GildedRose(object):
             item.quality -= by
 
     def increment_quality_of(self, item, by=1):
-        item.quality += by
+        if item.quality <= (MAX_QUAL - by):
+            item.quality += by
 
     def decrement_sell_in_of(self, item):
         item.sell_in -= 1
@@ -59,6 +60,11 @@ class GildedRose(object):
                 self.increment_quality_of(item, by=1)
 
     def update_quality_backstage_pass(self, item):
+        if item.sell_in < 0:
+            # pass reduces value after the concert
+            item.quality = 0
+            return
+
         if item.quality < MAX_QUAL:
             if item.sell_in > 10:
                 self.increment_quality_of(item, by=1)
@@ -66,10 +72,6 @@ class GildedRose(object):
                 self.increment_quality_of(item, by=3)
             elif item.sell_in < 11:
                 self.increment_quality_of(item, by=2)
-
-        if item.sell_in < 0:
-            # pass reduces value after the concert
-            item.quality = 0
 
 
 class Item:
