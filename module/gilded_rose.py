@@ -13,6 +13,7 @@ class SpecialItem(Enum):
 
 MAX_QUAL = 50
 
+
 class GildedRose(object):
 
     def __init__(self, items):
@@ -24,7 +25,7 @@ class GildedRose(object):
         else:
             self.decrement_quality_of(item)
 
-    def decrement_quality_of(self, item, by = 1):
+    def decrement_quality_of(self, item, by=1):
         if item.quality > 0:
             item.quality -= by
 
