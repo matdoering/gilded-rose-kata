@@ -35,6 +35,7 @@ class GildedRose(object):
                 self.update_quality_non_special_item(item)
 
             if item.name != SpecialItem.SULFURAS.value:
+                # decrement sell in for anything except sulfuras
                 self.decrement_sell_in(item)
 
             self.update_quality_for_negative_sell_in(item)
@@ -46,7 +47,7 @@ class GildedRose(object):
     def update_quality_backstage_pass(self, item):
         if item.quality < 50:
             self.increment_quality(item)
-            if item.name == SpecialItem.BACKSTAGE_PASS.value and item.quality < 50:
+            if item.quality < 50:
                 if item.sell_in < 11:
                     self.increment_quality(item)
                 if item.sell_in < 6:
