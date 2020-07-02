@@ -10,7 +10,6 @@ class SpecialItem(Enum):
     AGED_BRIE = "Aged Brie"
     BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
     SULFURAS = "Sulfuras, Hand of Ragnaros"
-    ALTBIER = "Altbier"
 
 MAX_QUAL = 50
 DECREASE_RATE = 1  # base decrease rate
@@ -68,7 +67,7 @@ class GildedRose(object):
                 self.update_quality_backstage_pass(item)
             elif item.name.endswith(SpecialItem.SULFURAS.value):
                 self.update_quality_sulfuras(item)
-            elif item.name.endswith(SpecialItem.ALTBIER.value):
+            elif isinstance(item, Altbier):
                 self.decrement_sell_in_of(item)
                 self.update_quality_altbier(item)
             else:
@@ -100,3 +99,9 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+
+class Altbier(Item):
+
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)

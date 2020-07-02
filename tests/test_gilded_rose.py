@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from module.gilded_rose import Item, GildedRose
+from module.gilded_rose import Item, GildedRose, Altbier
 
 
 class GildedRoseTest(unittest.TestCase):
@@ -189,19 +189,19 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(7, items[0].quality)
 
     def test_altbier_quality_degrades_twice_as_fast(self):
-        items = [Item("Altbier", 20, 20)]
+        items = [Altbier("Altbier", 20, 20)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(18, items[0].quality)
 
     def test_altbier_degrades_twice_as_fast_after_sell_in(self):
-        items = [Item("summoned Altbier", sell_in=-1, quality=4)]
+        items = [Altbier("summoned Altbier", sell_in=-1, quality=4)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
 
     def test_summoned_altbier_degrades_thrice_as_fast(self):
-        items = [Item("summoned Altbier", 20, 20)]
+        items = [Altbier("summoned Altbier", 20, 20)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(20-6, items[0].quality)
