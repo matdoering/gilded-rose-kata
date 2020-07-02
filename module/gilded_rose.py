@@ -22,10 +22,7 @@ class GildedRose(object):
         if item.sell_in < 0:
             self.decrement_quality_of(item)
             self.decrement_quality_of(item)
-        if item.quality > 0:
-            self.decrement_quality_of(item)
-        # decrement quality after check
-        if item.quality > 0 and item.sell_in < 0:
+        else:
             self.decrement_quality_of(item)
 
     def decrement_quality_of(self, item):
