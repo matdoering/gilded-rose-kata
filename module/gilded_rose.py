@@ -40,13 +40,11 @@ class GildedRose(object):
     def update_quality_brie_or_backstage(self, item):
         if item.quality < 50:
             self.increment_quality(item)
-            if item.name == SpecialItem.BACKSTAGE_PASS.value:
+            if item.name == SpecialItem.BACKSTAGE_PASS.value and item.quality < 50:
                 if item.sell_in < 11:
-                    if item.quality < 50:
-                        self.increment_quality(item)
+                    self.increment_quality(item)
                 if item.sell_in < 6:
-                    if item.quality < 50:
-                        self.increment_quality(item)
+                    self.increment_quality(item)
 
     def update_quality_for_negative_sell_in(self, item):
         if item.sell_in < 0:
