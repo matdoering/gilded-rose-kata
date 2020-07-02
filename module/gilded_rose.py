@@ -10,6 +10,7 @@ class SpecialItem(Enum):
     AGED_BRIE = "Aged Brie"
     BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
     SULFURAS = "Sulfuras, Hand of Ragnaros"
+    ALTBIER = "Altbier"
 
 MAX_QUAL = 50
 
@@ -40,6 +41,9 @@ class GildedRose(object):
         # no changes for sulfuras
         pass
 
+    def update_quality_altbier(self, item):
+        self.decrement_quality_of(item, 2)
+
     def update_quality(self):
         for item in self.items:
             if item.name == SpecialItem.AGED_BRIE.value:
@@ -50,6 +54,9 @@ class GildedRose(object):
                 self.update_quality_backstage_pass(item)
             elif item.name == SpecialItem.SULFURAS.value:
                 self.update_quality_sulfuras(item)
+            elif item.name == SpecialItem.ALTBIER.value:
+                self.decrement_sell_in_of(item)
+                self.update_quality_altbier(item)
             else:
                 self.decrement_sell_in_of(item)
                 self.update_quality_non_special_item(item)

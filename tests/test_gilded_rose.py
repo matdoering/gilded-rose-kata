@@ -188,6 +188,11 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(7, items[0].quality)
 
+    def test_altbier_quality_degrades_twice_as_fast(self):
+        items = [Item("Altbier", 20, 20)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(18, items[0].quality)
 
 if __name__ == '__main__':
     unittest.main()
