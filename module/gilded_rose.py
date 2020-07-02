@@ -13,6 +13,7 @@ class SpecialItem(Enum):
     ALTBIER = "Altbier"
 
 MAX_QUAL = 50
+DECREASE_RATE = 1  # base decrease rate
 
 def is_summoned_item(item):
     return item.name.startswith("summoned ")
@@ -24,11 +25,11 @@ class GildedRose(object):
 
     def update_quality_non_special_item(self, item):
         if item.sell_in < 0:
-            self.decrement_quality_of(item, by=2)
+            self.decrement_quality_of(item, by=DECREASE_RATE*2)
         else:
             self.decrement_quality_of(item)
 
-    def decrement_quality_of(self, item, by=1):
+    def decrement_quality_of(self, item, by=DECREASE_RATE):
         if is_summoned_item(item):
             # summoned items degrade thrice as fast
             by *= 3
@@ -40,6 +41,8 @@ class GildedRose(object):
     def increment_quality_of(self, item, by=1):
         if item.quality <= (MAX_QUAL - by):
             item.quality += by
+        else:
+            item.quality = MAX_QUAL
 
     def decrement_sell_in_of(self, item):
         item.sell_in -= 1
@@ -49,7 +52,7 @@ class GildedRose(object):
         pass
 
     def update_quality_altbier(self, item):
-        base_decrement = 2
+        base_decrement = DECREASE_RATE*2
         if item.sell_in < 0:
             self.decrement_quality_of(item, by=base_decrement*2)
         else:
