@@ -97,7 +97,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_quality_is_positive(self):
         """Quality does not go below 0."""
-        items = [Item("foo", 0, 0)]
+        items = [DefaultItem("foo", 0, 0)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
@@ -211,7 +211,6 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(15-(1*3), items[0].quality)
-
 
 if __name__ == '__main__':
     unittest.main()

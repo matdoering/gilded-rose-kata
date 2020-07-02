@@ -1,15 +1,5 @@
 # -*- coding: utf-8 -*-
-from enum import Enum
-
-def is_special_item(item):
-    return (SpecialItem.AGED_BRIE.value == item or
-            SpecialItem.BACKSTAGE_PASS.value == item or
-            SpecialItem.SULFURAS.value == item)
-
-class SpecialItem(Enum):
-    AGED_BRIE = "Aged Brie"
-    BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
-    SULFURAS = "Sulfuras, Hand of Ragnaros"
+from abc import ABC, abstractmethod
 
 MAX_QUAL = 50
 DECREASE_RATE = 1  # base decrease rate
@@ -59,13 +49,13 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            if item.name.endswith(SpecialItem.AGED_BRIE.value):
+            if isinstance(item, AgedBrie):
                 self.decrement_sell_in_of(item)
                 self.update_quality_brie(item)
-            elif item.name.endswith(SpecialItem.BACKSTAGE_PASS.value):
+            elif isinstance(item, BackstageTicket):
                 self.decrement_sell_in_of(item)
                 self.update_quality_backstage_pass(item)
-            elif item.name.endswith(SpecialItem.SULFURAS.value):
+            elif isinstance(item, Sulfuras):
                 self.update_quality_sulfuras(item)
             elif isinstance(item, Altbier):
                 self.decrement_sell_in_of(item)
@@ -91,7 +81,9 @@ class GildedRose(object):
             self.increment_quality_of(item, by=2)
 
 
-class Item:
+class Item(ABC):
+
+    @abstractmethod
     def __init__(self, name, sell_in, quality):
         self.name = name
         self.sell_in = sell_in
