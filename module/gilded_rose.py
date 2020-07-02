@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from enum import Enum
 
+def is_special_item(item):
+    return (SpecialItem.AGED_BRIE.value == item or
+            SpecialItem.BACKSTAGE_PASS.value == item or
+            SpecialItem.SULFURAS.value == item)
 
 class SpecialItem(Enum):
     AGED_BRIE = "Aged Brie"
@@ -61,12 +65,12 @@ class GildedRose(object):
                 if item.quality < MAX_QUAL:
                     self.increment_quality_of(item, by=1)
             else:
-                if item.name != SpecialItem.BACKSTAGE_PASS.value:
-                    if item.quality > 0:
-                        if item.name != SpecialItem.SULFURAS.value:
-                            self.decrement_quality_of(item)
-                else:
+                if item.name == SpecialItem.BACKSTAGE_PASS.value:
                     item.quality = 0
+                elif item.quality > 0:
+                    if item.name != SpecialItem.SULFURAS.value:
+                        self.decrement_quality_of(item)
+
 
 
 class Item:
