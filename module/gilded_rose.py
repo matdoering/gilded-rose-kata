@@ -14,20 +14,18 @@ class GildedRose(object):
 
     def update_quality_non_special_item(self, item):
         if item.quality > 0:
-                item.quality = item.quality - 1
+            self.decrement_quality(item)
+
+    def decrement_quality(self, item):
+        item.quality -= 1
+
+    def increment_quality(self, item):
+        item.quality += 1
 
     def update_quality(self):
         for item in self.items:
             if item.name == SpecialItem.AGED_BRIE.value or item.name == SpecialItem.BACKSTAGE_PASS.value:
-                if item.quality < 50:
-                    item.quality = item.quality + 1
-                    if item.name == SpecialItem.BACKSTAGE_PASS.value:
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-                        if item.sell_in < 6:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
+                self.update_quality_brie_or_backstage(item)
             elif item.name != SpecialItem.SULFURAS.value:
                 self.update_quality_non_special_item(item)
 
@@ -36,13 +34,24 @@ class GildedRose(object):
 
             self.update_quality_for_negative_sell_in(item)
 
+    def update_quality_brie_or_backstage(self, item):
+        if item.quality < 50:
+            self.increment_quality(item)
+            if item.name == SpecialItem.BACKSTAGE_PASS.value:
+                if item.sell_in < 11:
+                    if item.quality < 50:
+                        self.increment_quality(item)
+                if item.sell_in < 6:
+                    if item.quality < 50:
+                        self.increment_quality(item)
+
     def update_quality_for_negative_sell_in(self, item):
         if item.sell_in < 0:
             if item.name != SpecialItem.AGED_BRIE.value :
                 if item.name != SpecialItem.BACKSTAGE_PASS.value:
                     if item.quality > 0:
                         if item.name != SpecialItem.SULFURAS.value:
-                            item.quality = item.quality - 1
+                            self.decrement_quality(item)
                 else:
                     item.quality = item.quality - item.quality
             else:
