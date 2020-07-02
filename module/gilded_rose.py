@@ -31,13 +31,19 @@ class GildedRose(object):
     def decrement_sell_in_of(self, item):
         item.sell_in -= 1
 
+    def update_quality_sulfuras(self, item):
+        # no changes for sulfuras
+        pass
+
     def update_quality(self):
         for item in self.items:
             if item.name == SpecialItem.AGED_BRIE.value:
                 self.update_quality_brie(item)
             elif item.name == SpecialItem.BACKSTAGE_PASS.value:
                 self.update_quality_backstage_pass(item)
-            elif item.name != SpecialItem.SULFURAS.value:
+            elif item.name == SpecialItem.SULFURAS.value:
+                self.update_quality_sulfuras(item)
+            else:
                 self.update_quality_non_special_item(item)
 
             if item.name != SpecialItem.SULFURAS.value:
