@@ -12,6 +12,31 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual("foo", items[0].name)
 
+    def test_bar_with_quality(self):
+        """Name of item as expected."""
+        items = [Item("bar", -1, 2)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual("bar", items[0].name)
+
+    def test_aged_brie(self):
+        items = [Item("Aged Brie", 0, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual("Aged Brie", items[0].name)
+
+    def test_aged_backstage_passes_to_a_TAFKAL80ETC_concert(self):
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 0, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual("Backstage passes to a TAFKAL80ETC concert", items[0].name)
+
+    def test_sulfuras_hand_of_ragnaros(self):
+        items = [Item("Sulfuras, Hand of Ragnaros", 0, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual("Sulfuras, Hand of Ragnaros", items[0].name)
+
     def test_quality_is_positive(self):
         """Quality does not go below 0."""
         items = [Item("foo", 0, 0)]
