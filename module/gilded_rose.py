@@ -28,7 +28,11 @@ class GildedRose(object):
     def update_quality(self):
         for item in self.items:
             if item.name == SpecialItem.AGED_BRIE.value or item.name == SpecialItem.BACKSTAGE_PASS.value:
-                self.update_quality_brie_or_backstage(item)
+                if item.name == SpecialItem.AGED_BRIE.value
+                    if item.quality < 50:
+                        self.increment_quality(item)
+                else:
+                    self.update_quality_brie_or_backstage(item)
             elif item.name != SpecialItem.SULFURAS.value:
                 self.update_quality_non_special_item(item)
 
